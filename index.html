@@ -4,15 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Banswara Tourism</title>
-
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="SAFAR (10).png" type="image/png">
+  <meta name="theme-color" content="#0063B1">
   <style>
     body, html {
       margin: 0;
       padding: 0;
-      height: 100vh;    
- overflow-y: auto; 
+      height: 100vh;
+      overflow-y: auto;
     }
-
     iframe {
       width: 100%;
       height: 100%;
@@ -20,209 +21,22 @@
       position: relative;
       z-index: 1;
     }
-
-    @font-face {
-      font-family: 'British Script MT';
-      src: url('path-to-font/BritishScriptMT.woff') format('woff');
-    }
-
-    #hamburger-menu {
-      position: fixed;
-      top: 10px;
-      left: 20px;
-      z-index: 10001;
-      display: flex;
-      align-items: center;
-    }
-
-    .menu-toggle {
-      width: 30px;
-      height: 25px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      cursor: pointer;
-      background: white;
-      padding: 5px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      border-radius: 4px;
-    }
-
-    .menu-toggle span {
-      display: block;
-      height: 4px;
-      background-color: #333;
-      border-radius: 2px;
-    }
-
-    #lets-go {
-      font-family: 'British Script MT', cursive;
-      font-size: 20px;
-      color: white;
-      margin-left: 15px;
-      z-index: 10003;
-    }
-
-    #menu-dropdown {
-      position: fixed;
-      top: 0;
-      left: -270px;
-      width: 250px;
-      bottom:0; 
-      background: #0063B1;
-      border-right: 1px solid #ddd;
-      box-shadow: 2px 0 6px rgba(0,0,0,0.2);
-      padding:60px 10px max( env(safe-area-inset-bottom, 0px) , 16px);
-                         /* 2. Safe padding at the end  */
-      transition: left 0.3s ease;
-      z-index: 10000;
-      overflow-y: auto;  /* still scrollable            */
-    }
-
-    #menu-dropdown.open {
-      left: 0;
-    }
-
-    #menu-dropdown h3 {
-      color: white;
-      margin: 20px 10px 10px;
-      font-size: 19px;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-      padding-bottom: 5px;
-    }
-
-    #menu-dropdown hr {
-      border: 0;
-      height: 1px;
-      background: rgba(255,255,255,0.2);
-      margin: 10px 0;
-    }
-
-    #menu-dropdown a {
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      color: #00FF00;
-      text-decoration: none;
-    }
-
-    #menu-dropdown a:hover {
-      background-color: black;
-    }
-
-    #menu-dropdown i {
-      margin-right: 8px;
-      width: 20px;
-      text-align: center;
-    }
-
-    #menu-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0);
-      z-index: 9999;
-      display: none;
-    }
-
-    #menu-overlay.active {
-      display: block;
-    }
-
-    @media (max-width: 768px) {
- #menu-dropdown {
-        width: 220px;
-      }
-       @media (min-width: 601px) and (max-width: 1024px) 
-      {
-           #menu-dropdown {
-        width: 240px; 
-      }
-        @media (min-width: 1025px) {  
-      #menu-dropdown {
-        width: 260px;
-      }
-    }
   </style>
 </head>
 <body>
 
-<!-- HAMBURGER MENU -->
-<div id="hamburger-menu">
-  <div class="menu-toggle" onclick="toggleMenu()">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-  <span id="lets-go">Let's Go</span>
-</div>
+<!-- Splash Screen -->
+<img src="ChatGPT Image May 21, 2025, 10_07_56 PM.png" alt="Splash" style="width:100%; height:auto;">
 
-<!-- SLIDE-IN MENU WITHOUT TRANSLATE -->
-<div id="menu-dropdown">
-  <h3>Explore</h3>
-  <a href="Home.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Home" style="width: 30px; margin-right: 8px;"> Home
-  </a>
-  <a href="About Banswara.html">
-    <img src="https://tinypic.host/images/2025/06/04/banswara_map_white_filled.png" alt="About Banswara" style="width: 30px; margin-right: 8px;"> About Banswara
-  </a>
- <a href="NearestAttract.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/compass.png" alt="Tourists Circuits" style="width: 30px; margin-right: 8px;"> Nearest Attractions
-</a>
-  <a href="TOC5 - Copy (4).html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/line.png" alt="Tropic of Cancer" style="width: 30px; margin-right: 8px;"> Tropic of Cancer
-  </a>
-</a>
-  
-  <a href="TouristCircuits.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/route.png" alt="Tourists Circuits" style="width: 30px; margin-right: 8px;"> Tourist Circuits
-</a>
-  
-  <hr>
-
-
-  <h3>More Info</h3>
-  <a href="21.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/map.png" alt="Nature Attractions" style="width: 35px; margin-right: 8px;"> SAFAR Overview
-  </a>
-  <a href="Cont1.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="Nature Attractions" style="width: 35px; margin-right: 8px;"> Participate
-  </a>
-    <a href="privacy_policy_embedded.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/shield.png" alt="Privacy Policy" style="width: 35px; margin-right: 8px;"> Privacy Policy
-  </a>
-
-  <a href="#about" target="mainframe">How to use?</a>
-  <a href="C.html" target="mainframe">List of Contributors</a>
-</div>
-
-<div id="menu-overlay" onclick="closeMenu()"></div>
-
-<!-- MAIN CONTENT AREA -->
+<!-- IFRAME to Home Page -->
 <iframe src="Home.html"></iframe>
 
-<!-- JavaScript to control menu -->
-<script type="text/javascript">
-  function toggleMenu() {
-    const menu = document.getElementById("menu-dropdown");
-    const overlay = document.getElementById("menu-overlay");
-    const isOpen = menu.classList.contains("open");
-
-    if (isOpen) {
-      closeMenu();
-    } else {
-      menu.classList.add("open");
-      overlay.classList.add("active");
-    }
-  }
-
-  function closeMenu() {
-    document.getElementById("menu-dropdown").classList.remove("open");
-    document.getElementById("menu-overlay").classList.remove("active");
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.error('Service Worker registration failed', err));
   }
 </script>
-
 </body>
 </html>
