@@ -3,7 +3,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open('safar-cache-v1').then(cache => {
       return cache.addAll([
-        'index (38).html',
+        'index.html',
         'SAFAR (10).png',
         'ChatGPT Image May 21, 2025, 10_07_56 PM.png',
         'Home.html',
