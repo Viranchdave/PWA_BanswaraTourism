@@ -2,7 +2,7 @@
 {
   "name": "SAFAR - Spatial Application for Accessing Tourism Repository",
   "short_name": "SAFAR",
-  "start_url": "index.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#0063B1",
