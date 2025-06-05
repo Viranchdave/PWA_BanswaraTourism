@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banswara Tourist Circuits</title>
+
+  <!-- Leaflet core -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Marker Cluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+  <!-- Routing -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+
+  <style>
+    html, body { height: 100%; margin: 0; font-family: sans-serif; }
+    #map { height: 100%; }
+    .control-panel {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      width: 170px;
+    }
+
+    @media (max-width: 1024px) {
+      .control-panel {
+        width: 47px;
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .control-panel {
+        width: 46%;
+        left: 5%;
+        font-size: 14px;
+      }
+    }
+
+    .leaflet-control-attribution {
+      pointer-events: none;
+    }
+
+    .locate-btn {
+      margin-top: 10px;
+      padding: 3px 6px;
+      background: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<div class="control-panel">
+  <label for="circuit">Select:</label>
+  <select id="circuit">
+    <option value="">-- Choose --</option>
+    <option value="Mahi River Circuit">Mahi River Circuit</option>
+    <option value="Religio-Historical Circuit">Religio-Historical Circuit</option>
+  </select>
+  <button class="locate-btn" onclick="showMyLocation()">Show My Location</button>
+</div>
+
+<script>
+const circuits = {
+  "Mahi River Circuit": [
+    "Kadeliya Waterfall",
+    "Chachakota",
+    "Mahi Bajaj Sagar",
+    "Jagmer"
+  ],
+  "Religio-Historical Circuit": [
+    "Siddhi Vinayak Temple",
+    "Dwarkadheesh Temple ruins",
+    "Maa Tripura Sundari Temple",
+    "Ramkund",
+    "Bhimkund",
+    "Parahera",
+    "Arthuna Group of Monuments",
+    "Mangarh",
+    "Nandini Mata Temple",
+    "Brahmaji Temple Cheench"
+  ]
+};
+
+const locations = [
+  { name: "Chachakota", lat: 23.57044167, lng: 74.53465278 },
+  { name: "Siddhi Vinayak Temple", lat: 23.5625, lng: 74.325 },
+  { name: "Nandini Mata Temple", lat: 23.41213889, lng: 74.33668611 },
+  { name: "Anand Sagar Lake (Bai Talab)", lat: 23.54587778, lng: 74.47765278 },
+  { name: "Kadeliya Waterfall", lat: 23.53267778,
+    lng: 74.48671667 },
+  { name: "Mahi Bajaj Sagar", lat: 23.63020278,
+  lng: 74.54399167 },
+  { name: "Maa Tripura Sundari Temple", lat: 23.5325, lng: 74.32138889 },
+  { name: "Jagmer", lat: 23.65696944,
+    lng: 74.45761944 },
+  { name: "Bhimkund", lat: 23.57388889, lng: 74.255 },
+  { name: "Ramkund", lat: 23.55472222, lng: 74.29194444 },
+  { name: "Parahera", lat: 23.57468056, lng: 74.2204 },
+  { name: "Dwarkadheesh Temple ruins", lat: 23.56258056, lng: 74.32657778 },
+  { name: "Arthuna Group of Monuments", lat: 23.491525, lng: 74.10235833 },
+  { name: "Mangarh", lat: 23.35029444, lng: 73.98674167 },
+  { name: "Brahmaji Temple Cheench", lat: 23.46472222, lng: 74.30916667 }
+];
+
+const map = L.map('map', { zoomControl: false }).setView([23.5, 74.4], 9.4);
+
+const baseLayers = {
+"OSM": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy OpenStreetMap contributors'
+}),
+  "Carto Light": L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 19
+  }),
+  "Carto Night": L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 19
+  }),
+  "Esri World Imagery": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; Esri', maxZoom: 19
+  }),
+ "OpenTopoMap": L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenTopoMap'
+    })
+};
+baseLayers["Carto Light"].addTo(map);
+L.control.layers(baseLayers, null, { position: 'bottomright' }).addTo(map);
+L.control.zoom({ position: 'topleft' }).addTo(map);
+
+let routeControl = null;
+let currentLocationMarker = null;
+const markerCluster = L.markerClusterGroup().addTo(map);
+
+const locationLookup = {};
+locations.forEach(loc => locationLookup[loc.name] = loc);
+
+L.marker([23.5469, 74.4659], {
+  icon: L.icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+    iconSize: [30, 30],
+    iconAnchor: [15, 30]
+  })
+}).addTo(map).bindPopup("Default Center: Banswara");
+
+document.getElementById('circuit').addEventListener('change', e => {
+  const circuitName = e.target.value;
+  markerCluster.clearLayers();
+  if (!circuitName) return;
+
+  const stops = circuits[circuitName].map(name => locationLookup[name]).filter(Boolean);
+
+  stops.forEach((loc, i) => {
+    const nextName = stops[i + 1] ? stops[i + 1].name : "Final stop";
+    const popupText = `<strong>${loc.name}</strong><br>Next site: ${nextName}`;
+    const marker = L.marker([loc.lat, loc.lng]).bindPopup(popupText);
+    markerCluster.addLayer(marker);
+  });
+
+  if (routeControl) map.removeControl(routeControl);
+  const defaultPoint = L.latLng(23.5469, 74.4659);
+  const waypoints = [defaultPoint, ...stops.map(loc => L.latLng(loc.lat, loc.lng)), defaultPoint];
+
+  routeControl = L.Routing.control({
+    waypoints,
+    routeWhileDragging: false,
+    show: false,
+    addWaypoints: false,
+    draggableWaypoints: false,
+    createMarker: function(i, wp) {
+      if (i === 0 || i === waypoints.length - 1) {
+        return L.marker(wp.latLng).bindPopup("Banswara (Start/End)");
+      } else {
+        const loc = stops[i - 1];
+        const next = stops[i] ? stops[i].name : "Final stop";
+        return L.marker(wp.latLng).bindPopup(`<strong>${loc.name}</strong><br>Next site: ${next}`);
+      }
+    }
+  }).addTo(map);
+});
+
+function showMyLocation() {
+  if (!navigator.geolocation) {
+    alert("Geolocation is not supported by your browser.");
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(position => {
+    const { latitude, longitude } = position.coords;
+
+    if (currentLocationMarker) {
+      map.removeLayer(currentLocationMarker);
+    }
+
+    currentLocationMarker = L.marker([latitude, longitude], {
+      icon: L.icon({
+        iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+      })
+    }).addTo(map).bindPopup("You are here").openPopup();
+
+    map.setView([latitude, longitude], 13);
+  }, () => {
+    alert("Unable to retrieve your location.");
+  });
+}
+</script>
+</body>
+</html>

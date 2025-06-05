@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banswara Tourism</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="SAFAR (10).png" type="image/png">
+  <meta name="theme-color" content="#0063B1">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      position: relative;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<img src="ChatGPT Image May 21, 2025, 10_07_56 PM.png" alt="Splash" style="width:100%; height:auto;">
+
+<!-- IFRAME to Home Page -->
+<iframe src="Home.html"></iframe>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js')
+      .then(reg => console.log('Service Worker registered', reg))
+      .catch(err => console.error('Service Worker registration failed', err));
+  }
+</script>
+</body>
+</html>

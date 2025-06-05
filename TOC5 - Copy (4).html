@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <title>Banswara Tropic of Cancer Distance Map</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+
+    #locate-btn {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      z-index: 1000;
+      background-color: white;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    /* Mobile responsive tweaks */
+    @media (max-width: 768px) {
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
+ /* Mobile responsive tweaks */
+     @media (min-width: 601px) and (max-width: 1024px) {
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
+ /* Mobile responsive tweaks */
+     @media (min-width: 1025px)  {
+      #map {
+        height: 100vh;
+        width: 100vw;
+      }
+      #locate-btn {
+        font-size: 16px;
+        padding: 10px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="locate-btn">📍 Check Current Location</div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    const map = L.map('map').setView([23.5, 74.4], 9.4);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data © OpenStreetMap contributors'
+    }).addTo(map);
+const baseLayers = {
+"OSM": L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy OpenStreetMap contributors'
+}),
+  "Carto Light": L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 19
+  }),
+  "Carto Night": L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; CartoDB', subdomains: 'abcd', maxZoom: 19
+  }),
+  "Esri World Imagery": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; Esri', maxZoom: 19
+  }),
+ "OpenTopoMap": L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenTopoMap'
+    })
+};
+baseLayers["Carto Light"].addTo(map);
+L.control.layers(baseLayers, null, { position: 'topright' }).addTo(map);
+
+    const tropicLat = 23.5;
+
+    // Add Tropic of Cancer line
+    L.polyline([[tropicLat, 74.0], [tropicLat, 74.7]], { color: 'red' })
+      .addTo(map)
+      .bindPopup("Tropic of Cancer (23.5°N)");
+
+    // Calculate distance from a point to Tropic of Cancer
+    function distanceToTropic(lat) {
+      return Math.abs(lat - tropicLat) * 111.32; // 1 deg ~ 111.32 km
+    }
+
+    // Add predefined locations
+    const locations = [/* your locations here */];
+    const data = [...locations]; // shortened for brevity
+
+    const locationsFull = [
+      { name: "Chachakota", lat: 23.57044167, lng: 74.53465278, category: "nature" },
+      { name: "Nandini Mata Temple", lat: 23.41213889, lng: 74.33668611, category: "nature" },
+      { name: "Anand Sagar Lake (Bai Talab)", lat: 23.54587778, lng: 74.47765278, category: "historical" },
+      { name: "Rani-Bani Waterfall", lat: 23.443225, lng: 74.477975, category: "nature" },
+      { name: "Seengpura Waterfall", lat: 23.480252785, lng: 74.46395833, category: "nature" },
+      { name: "Jhua Waterfall", lat: 23.51874722, lng: 74.66520833, category: "nature" },
+      { name: "Kadeliya Waterfall", lat: 23.53267778, lng: 74.48671667, category: "nature" },
+      { name: "Kagdi Pickup Weir", lat: 23.54616111, lng: 74.46706944, category: "nature" },
+      { name: "Maa Tripura Sundari Temple", lat: 23.5325, lng: 74.32138889, category: "religious" },
+      { name: "Arthuna Group of Monuments", lat: 23.491525, lng: 74.10235833, category: "historical" },
+      { name: "Mangarh", lat: 23.35029444, lng: 73.98674167, category: "historical" },
+      { name: "Dwarkadheesh Temple ruins", lat: 23.56258056, lng: 74.32657778, category: "historical" },
+      { name: "Banswara Fort/Raj mandir/City palace", lat: 23.54363889, lng: 74.44691667, category: "historical" },
+      { name: "Parahera", lat: 23.57468056, lng: 74.2204, category: "historical" },
+      { name: "Ghotia Amba", lat: 23.34539722, lng: 74.41066667, category: "religious" },
+      { name: "Abdullah Pir Shrine", lat: 23.53513889, lng: 74.43932778, category: "religious" },
+      { name: "Samai Mata Temple", lat: 23.52303889, lng: 74.45757778, category: "religious" },
+      { name: "Madareshwar Temple", lat: 23.55421389, lng: 74.46954444, category: "religious" },
+      { name: "Sai Temple", lat: 23.54694444, lng: 74.46685556, category: "religious" },
+      { name: "Bhimkund", lat: 23.57388889, lng: 74.255, category: "religious" },
+      { name: "Brahmaji Temple Cheench", lat: 23.46472222, lng: 74.30916667, category: "religious" },
+      { name: "Siddhi Vinayak Temple", lat: 23.5625, lng: 74.325, category: "religious" },
+      { name: "Ramkund", lat: 23.55472222, lng: 74.29194444, category: "religious" },
+      { name: "Mahi Bajaj Sagar", lat: 23.63020278, lng: 74.54399167, category: "nature" },
+      { name: "Jagmer", lat: 23.65696944, lng: 74.45761944, category: "nature" },
+      { name: "Jholla Waterfall", lat: 23.43120556, lng: 74.23629444, category: "nature" },
+    ];
+
+    locationsFull.forEach(loc => {
+      const dist = distanceToTropic(loc.lat).toFixed(2);
+      L.marker([loc.lat, loc.lng])
+        .addTo(map)
+        .bindPopup(`<strong>${loc.name}</strong><br/>Category: ${loc.category}<br/>Distance to Tropic of Cancer: ${dist} km`);
+    });
+
+    // Geolocation functions
+    function showUserLocation() {
+      map.locate({ setView: true, maxZoom: 12 });
+    }
+
+    function onLocationFound(e) {
+      const lat = e.latitude;
+      const lng = e.longitude;
+      const userDist = distanceToTropic(lat).toFixed(2);
+
+      L.marker([lat, lng], {
+        icon: L.icon({
+          iconUrl: 'https://leafletjs.com/examples/custom-icons/leaf-red.png',
+          iconSize: [24, 36]
+        })
+      }).addTo(map)
+        .bindPopup(`<strong>Your Location</strong><br/>Latitude: ${lat.toFixed(4)}<br/>Longitude: ${lng.toFixed(4)}<br/>Distance to Tropic of Cancer: ${userDist} km`)
+        .openPopup();
+    }
+
+    function onLocationError(e) {
+      alert("Could not get your location: " + e.message);
+    }
+
+    map.on('locationfound', onLocationFound);
+    map.on('locationerror', onLocationError);
+
+    document.getElementById('locate-btn').addEventListener('click', showUserLocation);
+  </script>
+</body>
+</html>

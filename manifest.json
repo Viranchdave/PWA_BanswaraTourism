@@ -1,0 +1,23 @@
+
+{
+  "name": "SAFAR - Spatial Application for Accessing Tourism Repository",
+  "short_name": "SAFAR",
+  "start_url": "index (38).html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0063B1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "SAFAR (10).png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "SAFAR (10).png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contribute to Our SAFAR App</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f9f9;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #007b7f;
+      color: white;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    main {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+    }
+    h2 {
+      color: #004d4d;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 900px;
+    }
+    #game {
+      margin-top: 3rem;
+    }
+    #map {
+      height: 60vh;
+      width: 100%;
+    }
+    #question {
+      padding: 1rem;
+      background: #e0f7f7;
+      text-align: center;
+      font-size: 1.2rem;
+    }
+    #score {
+      text-align: center;
+      margin: 0.5rem;
+      font-size: 1rem;
+      color: #007b7f;
+    }
+    #nextBtn {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+    footer {
+      background-color: #e0f7f7;
+      text-align: center;
+      padding: 1rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Let's join hands to promote Banswara Tourism </h1>
+  <p>Submit your best photos or suggest new tourist spots</p>
+</header>
+
+<main>
+  <h2> Contribute Your Photos & Ideas</h2>
+  <p>SAFAR is the result of hard work of a number of stakeholders, be it researchers, photographers, administrators, and even the local public. It is always a team effort to bring Banswara on the tourism map of not only Rajasthan state but also India. And this dream can be carried ahead if more and more people join hands together. Therefore, We're inviting the community to share photos and details of beautiful sites. Selected submissions will be featured in the app with full credit to contributors.</p>
+
+<h3>Submit Photos or New Sites:</h3>
+<iframe 
+  src="https://docs.google.com/forms/d/e/1FAIpQLSfZMw7ZfoG8lP6KnOiQQfgMt5ObSlKrSU_FUacZHXrvmWF5qw/viewform?embedded=true
+"
+  width="100%" 
+  height="1000" 
+  frameborder="0" 
+  marginheight="0" 
+  marginwidth="0" 
+  style="border: 2px solid #007b7f; border-radius: 8px;">
+  Loading…
+</iframe>
+
+
+  <div id="game">
+    <h2> Play the Map Game: Guess the Tourist Spot</h2>
+    <div id="question">Click on the map to find: <span id="placeName"></span></div>
+    <div id="score">Score: <span id="scoreValue">0</span></div>
+    <div id="map"></div>
+    <button id="nextBtn">Next</button>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 SAFAR App Project 
+</footer>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+const map = L.map('map').setView([23.55, 74.44], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 18,
+  attribution: 'Map data © OpenStreetMap contributors'
+}).addTo(map);
+
+const locationsFull = [
+  { name: "Chachakota", lat: 23.57044167, lng: 74.53465278 },
+  { name: "Nandini Mata Temple", lat: 23.41213889, lng: 74.33668611 },
+  { name: "Anand Sagar Lake (Bai Talab)", lat: 23.54587778, lng: 74.47765278 },
+  { name: "Rani-Bani Waterfall", lat: 23.443225, lng: 74.477975 },
+  { name: "Seengpura Waterfall", lat: 23.480252785, lng: 74.46395833 },
+  { name: "Jhua Waterfall", lat: 23.51874722, lng: 74.66520833 },
+  { name: "Kadeliya Waterfall", lat: 23.53267778, lng: 74.48671667 },
+  { name: "Kagdi Pickup Weir", lat: 23.54616111, lng: 74.46706944 },
+  { name: "Maa Tripura Sundari Temple", lat: 23.5325, lng: 74.32138889 },
+  { name: "Arthuna Group of Monuments", lat: 23.491525, lng: 74.10235833 },
+  { name: "Mangarh", lat: 23.35029444, lng: 73.98674167 },
+  { name: "Dwarkadheesh Temple ruins", lat: 23.56258056, lng: 74.32657778 },
+  { name: "Banswara Fort/Raj mandir/City palace", lat: 23.54363889, lng: 74.44691667 },
+  { name: "Parahera", lat: 23.57468056, lng: 74.2204 },
+  { name: "Ghotia Amba", lat: 23.34539722, lng: 74.41066667 },
+  { name: "Abdullah Pir Shrine", lat: 23.53513889, lng: 74.43932778 },
+  { name: "Samai Mata Temple", lat: 23.52303889, lng: 74.45757778 },
+  { name: "Madareshwar Temple", lat: 23.55421389, lng: 74.46954444 },
+  { name: "Sai Temple", lat: 23.54694444, lng: 74.46685556 },
+  { name: "Bhimkund", lat: 23.57388889, lng: 74.255 },
+  { name: "Brahmaji Temple Cheench", lat: 23.46472222, lng: 74.30916667 },
+  { name: "Siddhi Vinayak Temple", lat: 23.5625, lng: 74.325 },
+  { name: "Ramkund", lat: 23.55472222, lng: 74.29194444 },
+  { name: "Mahi Bajaj Sagar", lat: 23.63020278, lng: 74.54399167 },
+  { name: "Jagmer", lat: 23.65696944, lng: 74.45761944 }
+];
+
+let currentIndex = 0;
+let score = 0;
+const questionEl = document.getElementById('placeName');
+const nextBtn = document.getElementById('nextBtn');
+const scoreEl = document.getElementById('scoreValue');
+
+function askQuestion() {
+  questionEl.textContent = locationsFull[currentIndex].name;
+}
+
+function checkAnswer(e) {
+  const clicked = e.latlng;
+  const correct = locationsFull[currentIndex];
+  const clickedPoint = L.latLng(clicked.lat, clicked.lng);
+  const correctPoint = L.latLng(correct.lat, correct.lng);
+  const distance = clickedPoint.distanceTo(correctPoint);
+
+  if (distance < 1500) {
+    score++;
+    scoreEl.textContent = score;
+    L.popup()
+      .setLatLng(clicked)
+      .setContent("? Correct! This is " + correct.name + ".")
+      .openOn(map);
+  } else {
+    L.popup()
+      .setLatLng(clicked)
+      .setContent("? Try again! You're about " + Math.round(distance) + " meters away.")
+      .openOn(map);
+  }
+}
+
+map.on('click', checkAnswer);
+nextBtn.addEventListener('click', () => {
+  currentIndex = (currentIndex + 1) % locationsFull.length;
+  askQuestion();
+});
+askQuestion();
+</script>
+</body>
+</html>
