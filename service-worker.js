@@ -8,10 +8,10 @@ const URLS_TO_CACHE = [
   'NearestAttract.html',
   'C.html',
   'Cont1.html',
-  'TOC5 - Copy (4).html',
+  'TOC.html',
   'privacy_policy_embedded.html',
-  'ChatGPT Image May 21, 2025, 10_07_56 PM.png',
-  'SAFAR (10).png',
+  'icon.png',
+  'logo.png',
   'manifest.json',
   'service-worker.js',
   // Add paths to CSS, JS, fonts, etc. if needed
