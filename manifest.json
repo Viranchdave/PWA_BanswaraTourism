@@ -1,7 +1,7 @@
 
 {
   "name": "SAFAR - Spatial Application for Accessing Tourism Repository",
-  "short_name": "SAFAR",
+  "short_name": "SAFAR BANSWARA",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f2f2f2",
@@ -9,12 +9,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "ChatGPT Image May 21, 2025, 10_07_56 PM.png",
+      "src": "icon.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "ChatGPT Image May 21, 2025, 10_07_56 PM.png",
+      "src": "icon.png",
       "sizes": "512x512",
       "type": "image/png"
     }
