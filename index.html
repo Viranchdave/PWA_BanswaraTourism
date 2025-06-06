@@ -4,16 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Banswara Tourism</title>
-<link rel="manifest" href="manifest.json">
-<link rel="icon" type="image/png" href="ChatGPT Image May 21, 2025, 10_07_56 PM.png">
-<meta name="theme-color" content="#795548">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="ChatGPT Image May 21, 2025, 10_07_56 PM.png">
+  <meta name="theme-color" content="#795548">
   <style>
     body, html {
       margin: 0;
       padding: 0;
-      height: 100vh;    
- overflow-y: auto; 
+      height: 100vh;
+      overflow-y: auto;
     }
 
     iframe {
@@ -71,15 +70,14 @@
       top: 0;
       left: -270px;
       width: 250px;
-      bottom:0; 
+      bottom: 0;
       background: #0063B1;
       border-right: 1px solid #ddd;
       box-shadow: 2px 0 6px rgba(0,0,0,0.2);
-      padding:60px 10px max( env(safe-area-inset-bottom, 0px) , 16px);
-                         /* 2. Safe padding at the end  */
+      padding: 60px 10px max(env(safe-area-inset-bottom, 0px), 16px);
       transition: left 0.3s ease;
       z-index: 10000;
-      overflow-y: auto;  /* still scrollable            */
+      overflow-y: auto;
     }
 
     #menu-dropdown.open {
@@ -135,24 +133,69 @@
     }
 
     @media (max-width: 768px) {
- #menu-dropdown {
-        width: 220px;
-      }
-       @media (min-width: 601px) and (max-width: 1024px) 
-      {
-           #menu-dropdown {
-        width: 240px; 
-      }
-        @media (min-width: 1025px) {  
-      #menu-dropdown {
-        width: 260px;
-      }
+      #menu-dropdown { width: 220px; }
+    }
+    @media (min-width: 601px) and (max-width: 1024px) {
+      #menu-dropdown { width: 240px; }
+    }
+    @media (min-width: 1025px) {
+      #menu-dropdown { width: 260px; }
+    }
+
+    #installPrompt {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    #installBox {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 360px;
+      font-family: sans-serif;
+      position: relative;
+    }
+
+    #installBtn {
+      background-color: #0063B1;
+      color: white;
+      border: none;
+      padding: 7px 12px;
+      font-size: 13px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #dontShowBtn {
+      padding: 7px 12px;
+      font-size: 13px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background: #ccc;
+      color: black;
+    }
+
+    #closePrompt {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      color: #666;
     }
   </style>
 </head>
 <body>
-
-<!-- HAMBURGER MENU -->
 <div id="hamburger-menu">
   <div class="menu-toggle" onclick="toggleMenu()">
     <span></span>
@@ -162,108 +205,93 @@
   <span id="lets-go">Let's Go</span>
 </div>
 
-<!-- SLIDE-IN MENU WITHOUT TRANSLATE -->
 <div id="menu-dropdown">
   <h3>Explore</h3>
-  <a href="Home.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" alt="Home" style="width: 30px; margin-right: 8px;"> Home
-  </a>
-  <a href="About Banswara.html">
-    <img src="https://tinypic.host/images/2025/06/04/banswara_map_white_filled.png" alt="About Banswara" style="width: 30px; margin-right: 8px;"> About Banswara
-  </a>
- <a href="NearestAttract.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/compass.png" alt="Tourists Circuits" style="width: 30px; margin-right: 8px;"> Nearest Attractions
-</a>
-  <a href="TOC5 - Copy (4).html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/line.png" alt="Tropic of Cancer" style="width: 30px; margin-right: 8px;"> Tropic of Cancer
-  </a>
-</a>
-  
-  <a href="TouristCircuits.html">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/route.png" alt="Tourists Circuits" style="width: 30px; margin-right: 8px;"> Tourist Circuits
-</a>
-  
+  <a href="Home.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/home.png" style="width:30px; margin-right:8px;"> Home</a>
+  <a href="About Banswara.html"><img src="https://tinypic.host/images/2025/06/04/banswara_map_white_filled.png" style="width:30px; margin-right:8px;"> About Banswara</a>
+  <a href="NearestAttract.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/compass.png" style="width:30px; margin-right:8px;"> Nearest Attractions</a>
+  <a href="TOC5 - Copy (4).html"><img src="https://img.icons8.com/ios-filled/50/ffffff/line.png" style="width:30px; margin-right:8px;"> Tropic of Cancer</a>
+  <a href="TouristCircuits.html"><img src="https://img.icons8.com/ios-filled/50/ffffff/route.png" style="width:30px; margin-right:8px;"> Tourist Circuits</a>
   <hr>
-
-
   <h3>More Info</h3>
-  <a href="21.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/map.png" alt="Nature Attractions" style="width: 35px; margin-right: 8px;"> SAFAR Overview
-  </a>
-  <a href="Cont1.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="Nature Attractions" style="width: 35px; margin-right: 8px;"> Participate
-  </a>
-    <a href="privacy_policy_embedded.html" target="mainframe">
-    <img src="https://img.icons8.com/ios-filled/50/ffffff/shield.png" alt="Privacy Policy" style="width: 35px; margin-right: 8px;"> Privacy Policy
-  </a>
-
+  <a href="21.html" target="mainframe"><img src="https://img.icons8.com/ios-filled/50/ffffff/map.png" style="width:35px; margin-right:8px;"> SAFAR Overview</a>
+  <a href="Cont1.html" target="mainframe"><img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" style="width:35px; margin-right:8px;"> Participate</a>
+  <a href="privacy_policy_embedded.html" target="mainframe"><img src="https://img.icons8.com/ios-filled/50/ffffff/shield.png" style="width:35px; margin-right:8px;"> Privacy Policy</a>
   <a href="#about" target="mainframe">How to use?</a>
   <a href="C.html" target="mainframe">List of Contributors</a>
 </div>
 
 <div id="menu-overlay" onclick="closeMenu()"></div>
 
-<!-- MAIN CONTENT AREA -->
-<iframe src="Home.html"></iframe>
-
-<!-- JavaScript to control menu -->
-<script type="text/javascript">
-  function toggleMenu() {
-    const menu = document.getElementById("menu-dropdown");
-    const overlay = document.getElementById("menu-overlay");
-    const isOpen = menu.classList.contains("open");
-
-    if (isOpen) {
-      closeMenu();
-    } else {
-      menu.classList.add("open");
-      overlay.classList.add("active");
-    }
-  }
-
-  function closeMenu() {
-    document.getElementById("menu-dropdown").classList.remove("open");
-    document.getElementById("menu-overlay").classList.remove("active");
-  }
-</script>
-    <!-- Splash Screen -->
 <img src="SAFAR (10).png" alt="Splash" style="width:100%; height:auto;">
-
-<!-- IFRAME to Home Page -->
 <iframe src="Home.html"></iframe>
+
+<div id="installPrompt" style="display:none;">
+  <div id="installBox">
+    <img src="ChatGPT Image May 21, 2025, 10_07_56 PM.png" alt="App Icon" style="width:40px; height:40px; border-radius:8px;">
+    <div style="flex:1;">
+      <p style="margin:0;">Install <strong>SAFAR</strong> on your device for quick access!</p>
+      <div style="margin-top:5px;">
+        <button id="installBtn">Add to Home Screen</button>
+        <button id="dontShowBtn">Don’t show again</button>
+      </div>
+    </div>
+    <span id="closePrompt">&times;</span>
+  </div>
+</div>
+
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js')
-      .then(() => console.log('Service Worker registered'));
+function toggleMenu() {
+  const menu = document.getElementById("menu-dropdown");
+  const overlay = document.getElementById("menu-overlay");
+  menu.classList.toggle("open");
+  overlay.classList.toggle("active");
+}
+function closeMenu() {
+  document.getElementById("menu-dropdown").classList.remove("open");
+  document.getElementById("menu-overlay").classList.remove("active");
+}
+
+// Splash fade out
+window.addEventListener('load', () => {
+  const splash = document.querySelector('img[alt="Splash"]');
+  if (splash) {
+    splash.style.transition = "opacity 1s ease-out";
+    splash.style.opacity = 0;
+    setTimeout(() => splash.remove(), 1500);
   }
-</script>
-  
-<!-- PWA Install Prompt Script -->
-<script>
-  let deferredPrompt;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
+});
 
-    const installBtn = document.createElement('button');
-    installBtn.textContent = "Install SAFAR App";
-    installBtn.style = "position: fixed; bottom: 20px; left: 20px; padding: 10px 20px; font-size: 16px; z-index: 9999;";
-    document.body.appendChild(installBtn);
+// Service Worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('Service Worker registered'));
+}
 
-    installBtn.addEventListener('click', () => {
-      installBtn.remove();
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(choiceResult => {
-        if (choiceResult.outcome === 'accepted') {
-          console.log('User accepted the install prompt');
-        } else {
-          console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-      });
-    });
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  if (localStorage.getItem('safarInstallDismissed')) return;
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installPrompt').style.display = 'flex';
+
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    document.getElementById('installPrompt').style.display = 'none';
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
   });
-</script>
 
+  document.getElementById('dontShowBtn').addEventListener('click', () => {
+    localStorage.setItem('safarInstallDismissed', 'true');
+    document.getElementById('installPrompt').style.display = 'none';
+  });
+
+  document.getElementById('closePrompt').addEventListener('click', () => {
+    document.getElementById('installPrompt').style.display = 'none';
+  });
+});
+</script>
 </body>
 </html>
