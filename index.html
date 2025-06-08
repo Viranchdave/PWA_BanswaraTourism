@@ -7,18 +7,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="icon.png">
   <meta name="theme-color" content="#795548">
-  <meta http-equiv="Content-Security-Policy" content="
-  default-src 'self';
-  script-src 'self';
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' data:;
-  connect-src 'self';
-  object-src 'none';
-  base-uri 'self';
-  form-action 'self';
-  worker-src 'self';
-">
-
+  
   <style>
     body, html {
       margin: 0;
@@ -216,6 +205,21 @@
 }
 
   </style>
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data:;
+  connect-src 'self';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  worker-src 'self';
+  frame-ancestors 'none';
+">
+<meta http-equiv="X-Frame-Options" content="DENY">
+<meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
+
 </head>
 <body>
 <div id="hamburger-menu">
