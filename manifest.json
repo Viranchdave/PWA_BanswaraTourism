@@ -3,7 +3,7 @@
   "name": "SAFAR - Spatial Application for Accessing Tourism Repository",
   "short_name": "SAFAR BANSWARA",
   "start_url": "index.html",
-  "display": "standalone",
+  "display": "fullscreen",
   "background_color": "#f2f2f2",
   "theme_color": "#f2f2f2",
   "orientation": "portrait",
