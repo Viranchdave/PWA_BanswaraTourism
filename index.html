@@ -193,6 +193,16 @@
       font-size: 18px;
       color: #666;
     }
+    img[alt="Splash"] {
+  width: 100vw;    /* full viewport width */
+  height: 100vh;   /* full viewport height */
+  object-fit: cover; /* cover entire area without distortion */
+  position: fixed;  /* to keep it fixed while loading */
+  top: 0;
+  left: 0;
+  z-index: 9999;   /* on top of everything */
+}
+
   </style>
 </head>
 <body>
