@@ -14,12 +14,13 @@ const URLS_TO_CACHE = [
   'logo.png',
   'manifest.json',
   'service-worker.js',
-  // Add paths to CSS, JS, fonts, etc. if needed
+  'offline.html',         // <-- add offline fallback page here
+  // Add your CSS, JS, fonts, etc. here explicitly
 ];
 
 // INSTALL: Cache essential files
 self.addEventListener('install', event => {
-  self.skipWaiting(); // Activate new service worker immediately
+  self.skipWaiting(); // Activate new SW immediately
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(URLS_TO_CACHE);
@@ -31,29 +32,52 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   self.clients.claim(); // Take control of all clients immediately
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames
-          .filter(name => name !== CACHE_NAME)
-          .map(name => caches.delete(name))
-      );
-    })
+    caches.keys().then(cacheNames =>
+      Promise.all(
+        cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
+      )
+    )
   );
 });
 
-// FETCH: Serve from cache first, then network
+// FETCH: Cache-first for same-origin requests, fallback to offline page if navigation fails
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      // Serve from cache if available, else fetch from network
-      return response || fetch(event.request).catch(() => {
-        // Optionally add: return caches.match('/offline.html');
-        return new Response('You are offline. Content not available.', {
-          status: 503,
-          statusText: 'Offline',
-          headers: new Headers({ 'Content-Type': 'text/plain' })
+  const url = new URL(event.request.url);
+
+  if (url.origin === location.origin) {
+    // For requests from your own origin, use cache first
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) return cachedResponse;
+
+        return fetch(event.request).then(networkResponse => {
+          // Cache fetched response for future requests
+          return caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        }).catch(() => {
+          // If fetch fails and this is a navigation request, show offline page
+          if (event.request.mode === 'navigate') {
+            return caches.match('offline.html');
+          }
+          // For other requests, respond with a simple offline message
+          return new Response('You are offline. Content not available.', {
+            status: 503,
+            statusText: 'Offline',
+            headers: new Headers({ 'Content-Type': 'text/plain' })
+          });
         });
+      })
+    );
+  } else {
+    // For external requests (like APIs), try network only
+    event.respondWith(fetch(event.request).catch(() => {
+      return new Response('You are offline. Content not available.', {
+        status: 503,
+        statusText: 'Offline',
+        headers: new Headers({ 'Content-Type': 'text/plain' })
       });
-    })
-  );
+    }));
+  }
 });
