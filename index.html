@@ -268,59 +268,30 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log('Service Worker registered'));
 }
 
-<!-- PWA Install Prompt Modal -->
-<div id="installPrompt" style="
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  padding: 16px 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-  z-index: 9999;
-  max-width: 90%;
-  font-family: Arial, sans-serif;
-  text-align: center;
-">
-  <div style="font-size: 16px; margin-bottom: 10px;">
-    📲 <strong>Add SAFAR to your Home Screen</strong>
-  </div>
-  <div style="margin-top: 8px;">
-    <button id="installBtn" style="
-      padding: 8px 16px;
-      margin: 4px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    ">Install</button>
+// PWA Install Prompt
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  if (localStorage.getItem('safarInstallDismissed')) return;
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installPrompt').style.display = 'flex';
 
-    <button id="dontShowBtn" style="
-      padding: 8px 16px;
-      margin: 4px;
-      background-color: #6c757d;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    ">Don't show again</button>
+  document.getElementById('installBtn').addEventListener('click', async () => {
+    document.getElementById('installPrompt').style.display = 'none';
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  });
 
-    <button id="closePrompt" style="
-      padding: 8px 12px;
-      margin: 4px;
-      background-color: #dc3545;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    ">X</button>
-  </div>
-</div>
+  document.getElementById('dontShowBtn').addEventListener('click', () => {
+    localStorage.setItem('safarInstallDismissed', 'true');
+    document.getElementById('installPrompt').style.display = 'none';
+  });
 
+  document.getElementById('closePrompt').addEventListener('click', () => {
+    document.getElementById('installPrompt').style.display = 'none';
+  });
+});
   
 </script>
 </body>
